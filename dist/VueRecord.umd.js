@@ -1591,7 +1591,11 @@ module.exports = {};
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "default", function() { return /* binding */ addStylesClient; });
 
 // CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/listToStyles.js
 /**
@@ -1623,7 +1627,6 @@ function listToStyles (parentId, list) {
 }
 
 // CONCATENATED MODULE: ./node_modules/vue-style-loader/lib/addStylesClient.js
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return addStylesClient; });
 /*
   MIT License http://www.opensource.org/licenses/mit-license.php
   Author Tobias Koppers @sokra
@@ -4161,34 +4164,35 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 	 *                       is started.
 	 */
 	function StartAudioContext(context, elements, callback){
+		context.resume().then(() => {
+			//the promise is invoked when the AudioContext is started
+			var promise = new Promise(function(success) {
+				onStarted(context, success)
+			})
 
-		//the promise is invoked when the AudioContext is started
-		var promise = new Promise(function(success) {
-			onStarted(context, success)
-		})
+			// The TapListeners bound to the elements
+			var tapListeners = []
 
-		// The TapListeners bound to the elements
-		var tapListeners = []
-
-		// add all the tap listeners
-		if (!elements){
-			elements = document.body
-		}
-		bindTapListener(elements, tapListeners, context)
-
-		//dispose all these tap listeners when the context is started
-		promise.then(function(){
-			for (var i = 0; i < tapListeners.length; i++){
-				tapListeners[i].dispose()
+			// add all the tap listeners
+			if (!elements){
+				elements = document.body
 			}
-			tapListeners = null
+			bindTapListener(elements, tapListeners, context)
 
-			if (callback){
-				callback()
-			}
-		})
+			//dispose all these tap listeners when the context is started
+			promise.then(function(){
+				for (var i = 0; i < tapListeners.length; i++){
+					tapListeners[i].dispose()
+				}
+				tapListeners = null
 
-		return promise
+				if (callback){
+					callback()
+				}
+			})
+
+			return promise
+		})		
 	}
 
 	return StartAudioContext
@@ -4992,7 +4996,12 @@ module.exports = document && document.documentElement;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, "VueRecordAudio", function() { return /* reexport */ VueRecordAudio; });
+__webpack_require__.d(__webpack_exports__, "VueRecordVideo", function() { return /* reexport */ VueRecordVideo; });
 
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/setPublicPath.js
 // This file is imported into lib/wc client bundles.
@@ -5011,7 +5020,7 @@ if (typeof window !== 'undefined') {
 // Indicate to webpack that this file can be concatenated
 /* harmony default export */ var setPublicPath = (null);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"08c5d1f8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueRecordAudio.vue?vue&type=template&id=12621f8a&lang=html&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"04bd7663-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueRecordAudio.vue?vue&type=template&id=12621f8a&lang=html&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.isSupported)?_c('div',{staticClass:"vue-audio-recorder",class:{
     'active': _vm.isRecording,
     'paused': _vm.isPaused
@@ -5899,7 +5908,7 @@ var component = normalizeComponent(
 )
 
 /* harmony default export */ var VueRecordAudio = (component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"08c5d1f8-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueRecordVideo.vue?vue&type=template&id=5dea3d92&lang=html&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"04bd7663-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/VueRecordVideo.vue?vue&type=template&id=5dea3d92&lang=html&
 var VueRecordVideovue_type_template_id_5dea3d92_lang_html_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.isSupported)?_c('div',{staticClass:"vue-video-recorder",class:{
     'active': _vm.isRecording,
     'paused': _vm.isPaused
@@ -5998,8 +6007,6 @@ function install(Vue) {
   Vue.component('VueRecordVideo', VueRecordVideo);
 }
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
-/* concated harmony reexport VueRecordAudio */__webpack_require__.d(__webpack_exports__, "VueRecordAudio", function() { return VueRecordAudio; });
-/* concated harmony reexport VueRecordVideo */__webpack_require__.d(__webpack_exports__, "VueRecordVideo", function() { return VueRecordVideo; });
 
 
 /* harmony default export */ var entry_lib = __webpack_exports__["default"] = (install);

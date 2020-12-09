@@ -14,7 +14,7 @@
     "dist"
   ],
   "dependencies": {
-    "startaudiocontext": "^1.2.1",
+    "startaudiocontext": "git+https://github.com/LuisDavidPadron/StartAudioContext.git",
     "tone": "^13.8.25",
     "vue": "^2.0"
   },
