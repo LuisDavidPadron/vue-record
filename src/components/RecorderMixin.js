@@ -58,6 +58,7 @@ export default {
       if (!this.$_stream) {
         return
       }
+      let context = new AudioContext();
 
       this.$_mediaRecorder = new MediaRecorder(this.$_stream, {
         mimeType: this.mimeType
@@ -66,9 +67,11 @@ export default {
       this.$_mediaRecorder.ignoreMutedMedia = true
 
       this.$_mediaRecorder.addEventListener('start', () => {
-        this.isRecording = true
-        this.isPaused = false
-        this.$emit('start')
+        context.resume().then(() => {
+          this.isRecording = true
+          this.isPaused = false
+          this.$emit('start')
+        })        
       })
 
       this.$_mediaRecorder.addEventListener('resume', () => {
