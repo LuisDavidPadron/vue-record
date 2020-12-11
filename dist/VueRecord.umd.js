@@ -5107,38 +5107,49 @@ function _asyncToGenerator(fn) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
+                navigator.mediaDevices.getUserMedia({
+                  audio: true
+                }).catch(function (handleError) {
+                  return alert('Este dispositivo no dispone de un microfono, por favor habilita uno, y activalo en tu navegador para que puedas usar la herramienta de audio');
+                });
+                navigator.permissions.query({
+                  name: "microphone"
+                }).then(function (permission) {
+                  permission.state === 'denied' && alert('Para grabar un audio es necesario activar el microfono.');
+                });
+
                 if (!this.isRecording) {
-                  _context.next = 2;
+                  _context.next = 4;
                   break;
                 }
 
                 return _context.abrupt("return");
 
-              case 2:
-                _context.prev = 2;
-                _context.next = 5;
+              case 4:
+                _context.prev = 4;
+                _context.next = 7;
                 return this.getStream();
 
-              case 5:
+              case 7:
                 this.$_stream = _context.sent;
                 this.prepareRecorder();
                 this.$_mediaRecorder.start();
-                _context.next = 14;
+                _context.next = 16;
                 break;
 
-              case 10:
-                _context.prev = 10;
-                _context.t0 = _context["catch"](2);
+              case 12:
+                _context.prev = 12;
+                _context.t0 = _context["catch"](4);
                 this.$emit('error', _context.t0); // eslint-disable-next-line
 
                 console.error(_context.t0);
 
-              case 14:
+              case 16:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, this, [[2, 10]]);
+        }, _callee, this, [[4, 12]]);
       }));
 
       function start() {

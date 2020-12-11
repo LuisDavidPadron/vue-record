@@ -10,6 +10,12 @@ export default {
   },
   methods: {
     async start () {
+      navigator.mediaDevices.getUserMedia({ audio: true }).catch(() => alert('Este dispositivo no dispone de un microfono, por favor habilita uno, y activalo en tu navegador para que puedas usar la herramienta de audio'));
+      navigator.permissions.query({
+        name: "microphone"
+      }).then(function (permission) {
+        permission.state === 'denied' && alert('Para grabar un audio es necesario activar el microfono.' );
+      });
       if (this.isRecording) {
         return
       }
